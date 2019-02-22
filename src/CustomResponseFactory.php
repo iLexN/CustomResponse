@@ -71,6 +71,12 @@ final class CustomResponseFactory implements CustomResponseFactoryInterface
         return $this->responseFactory->createResponse($status);
     }
 
+    /**
+     * @param string $uri
+     * @param int $status
+     *
+     * @return ResponseInterface
+     */
     public function createRedirectResponseFromString(
         string $uri,
         int $status = CustomResponseFactoryInterface::DEFAULT_STATUS_REDIRECT
@@ -79,6 +85,12 @@ final class CustomResponseFactory implements CustomResponseFactoryInterface
             ->withHeader('location', $uri);
     }
 
+    /**
+     * @param UriInterface $uri
+     * @param int $status
+     *
+     * @return ResponseInterface
+     */
     public function createRedirectResponseFromUri(
         UriInterface $uri,
         int $status = CustomResponseFactoryInterface::DEFAULT_STATUS_REDIRECT

@@ -71,11 +71,23 @@ interface CustomResponseFactoryInterface
         int $status = CustomResponseFactoryInterface::DEFAULT_STATUS_EMPTY
     ): ResponseInterface;
 
+    /**
+     * @param string $uri
+     * @param int $status
+     *
+     * @return ResponseInterface
+     */
     public function createRedirectResponseFromString(
         string $uri,
         int $status = CustomResponseFactoryInterface::DEFAULT_STATUS_REDIRECT
     ): ResponseInterface;
 
+    /**
+     * @param UriInterface $uri
+     * @param int $status
+     *
+     * @return ResponseInterface
+     */
     public function createRedirectResponseFromUri(
         UriInterface $uri,
         int $status = CustomResponseFactoryInterface::DEFAULT_STATUS_REDIRECT
