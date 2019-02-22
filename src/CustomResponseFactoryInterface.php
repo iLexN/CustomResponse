@@ -4,13 +4,11 @@ declare(strict_types=1);
 
 namespace Ilex\CustomResponse;
 
-use Psr\Http\Message\ResponseFactoryInterface;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\UriInterface;
 
 interface CustomResponseFactoryInterface
 {
-
     public const DEFAULT_STATUS_OK = 200;
 
     public const DEFAULT_STATUS_EMPTY = 204;
@@ -32,8 +30,6 @@ interface CustomResponseFactoryInterface
     public const DEFAULT_TEXT_CONTENT_TYPE = 'text/plain; charset=utf-8';
 
     public const DEFAULT_HTML_CONTENT_TYPE = 'text/html; charset=utf-8';
-
-    public function __construct(ResponseFactoryInterface $responseFactory);
 
     /**
      * Create a JSON response with the given data.

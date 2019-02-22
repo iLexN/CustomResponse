@@ -6,9 +6,21 @@ namespace Ilex\CustomResponse;
 
 use Nyholm\Psr7\Factory\Psr17Factory;
 use PHPUnit\Framework\TestCase;
+use ReflectionClass;
 
 class CustomResponseFactoryTest extends TestCase
 {
+    public function testCreateFactory(): void
+    {
+        $factory = new Psr17Factory();
+        $object = new CustomResponseFactory($factory);
+        $reflection = new ReflectionClass($object);
+        $property = $reflection->getProperty('responseFactory');
+        $property->setAccessible(true);
+        $privateFactory = $property->getValue($object);
+        self::assertEquals($privateFactory, $factory);
+    }
+
     /**
      * @dataProvider provider
      *
@@ -159,6 +171,26 @@ JSON;
             (string)$response->getBody(),
             $label . ': Test json content fail'
         );
+    }
+
+    /**
+     * @dataProvider provider
+     *
+     * @param string $label
+     * @param CustomResponseFactory $factory
+     */
+    public function testCreateJsonResponseFromArrayFail(
+        string $label,
+        CustomResponseFactory $factory
+    ): void {
+        // Serializing something that is not serializable.
+        $data = [
+            'stream' => fopen('php://memory', 'rb'),
+            'label' => $label,
+        ];
+        $this->expectException(\RuntimeException::class);
+        $this->expectExceptionMessage('json_encode have error');
+        $factory->createJsonResponseFromArray($data);
     }
 
     public function provider(): array
